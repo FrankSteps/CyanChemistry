@@ -6,16 +6,16 @@
  Desenvolvido em:                    02/08/2025
  Modificado em:                      22/09/2025
 
- Este programa tem como finalidade usar as funcionalidades de audio e imagem da SFML, bem como
+ Este programa tem como finalidade usar as funcionalidades de audio e imagem do raylib, bem como
  sua capacidade em reconhecer as teclas que estão sendo pressionadas no teclado.
 
  Este programa consiste em tocar (ou pausar) as músicas. Funcionando como um tocador.
  Assim que uma tecla númerica (do 1 ao 5) é pressionada, a música toca e imagem muda.
  Ao clicar em "espaço", qualquer música que esteja tocando é pausada mudando assim para uma outra
  imagem.
- Brevemente pretendo trocar a funcionalidade dos botões do teclado para botões interativos na telas
+ O botão de play/pause vão ser, em breve, colocados para funcionar. Por enquanto, ainda falta programar eles corretamente.
 
- Informações legais das músicas:
+ Informações legais das músicas usadas neste projeto:
  O EP "CyanChemistry" e a single "Sweet Childhood" têm Direitos Autorais - CC (Creative Commons):
  Todas as músicas deste projeto foram compartilhadas no YouTube, bandcamp e Spotify, mas com algumas
  exceções:
@@ -26,15 +26,12 @@
  https://music.amazon.com.au/artists/B0D2Z8C41S/frank-steps        (exceto sweet Childhood e Bright Cooper)
  https://music.indiefy.net/artist/frank-steps                      (exceto sweet Childhood e Bright Cooper)
 
- Quem sabe eu não lance mais alguma ainda este ano (2025)... Mas é improvável...
 
  Observações e detalhes do projeto:
  Planejo acrescentar um arquivo para baixar este projeto em qualquer computador linux usando bash em sua
  arquitetura. O usuário executa o arquivo de download e ele irá baixar todas as bibliotecas, o compilador e
  qualquer outra necessidade para o programa. Após todo o processo, o programa vai poder ser usado normalmente.
 
-
- English [EN-USA]:
  */
 
 // libraries
@@ -48,14 +45,14 @@ namespace ray {
 
 // global variables
 float scale = 2.0f;
-bool playing = false;
+bool playing = false; // vou usar no botão de pause/play
 int currentSong = 0;  
 int back_adv = 0;    
 
 // main loop
 int main() {
     // create window
-    ray::InitWindow(294*scale, 211*scale, "Cyan Chemistry - Frank Steps");
+    ray::InitWindow(294*scale, 220*scale, "Cyan Chemistry - Frank Steps");
 
     // load icon
     ray::Image icon = ray::LoadImage("image/icon/icon.png");
@@ -88,17 +85,15 @@ int main() {
         ray::Vector2 mousePoint = ray::GetMousePosition();
 
         // positions
-        ray::Vector2 pos = {0, 0};
-        ray::Vector2 pos_cbk = {124, 352};
-        ray::Vector2 pos_pse = {272, 350};
-        ray::Vector2 pos_ply = {272, 350};
-        ray::Vector2 pos_adv = {420, 352};
+        ray::Vector2 pos_dis = {0, 15};
+        ray::Vector2 pos_cbk = {124, 367};
+        ray::Vector2 pos_ply = {272, 365};
+        ray::Vector2 pos_adv = {420, 367};
 
         // click detections variables
         bool clicked_cbk = false;
-        bool clicked_pse = false;
-        bool clicked_ply = false;
         bool clicked_adv = false;
+        bool clicked_ply_pse = false;
 
 
         // button colisions area 
@@ -116,18 +111,39 @@ int main() {
             (float)button_adv.height*scale 
         };
 
+        ray::Rectangle rect_ply_pse = {
+            pos_ply.x,
+            pos_ply.y,
+            (float)button_ply.width*scale,
+            (float)button_ply.height*scale
+        };
+
         // button click detection
-        if (ray::CheckCollisionPointRec(mousePoint, rect_adv) && ray::IsMouseButtonPressed(ray::MOUSE_LEFT_BUTTON)) {
+        if (ray::CheckCollisionPointRec(mousePoint, rect_adv) && ray::IsMouseButtonPressed(ray::MOUSE_BUTTON_LEFT)) {
             clicked_adv = true;
         }
 
-        if (ray::CheckCollisionPointRec(mousePoint, rect_cbk) && ray::IsMouseButtonPressed(ray::MOUSE_LEFT_BUTTON)) {
+        if (ray::CheckCollisionPointRec(mousePoint, rect_cbk) && ray::IsMouseButtonPressed(ray::MOUSE_BUTTON_LEFT)) {
             clicked_cbk = true;
+        }
+
+        if (ray::CheckCollisionPointRec(mousePoint, rect_ply_pse) && ray::IsMouseButtonPressed(ray::MOUSE_BUTTON_LEFT)) {
+            clicked_ply_pse = true;
+            playing = !playing;
+            clicked_ply_pse = !clicked_ply_pse;
+            if (!playing) {
+                ray::PauseSound(neod);
+                ray::PauseSound(mush);
+                ray::PauseSound(world);
+                ray::PauseSound(cooper);
+                ray::PauseSound(sweet);
+            }          
         }
 
         // space = play/pause
         if (ray::IsKeyPressed(ray::KEY_SPACE)) {
             playing = !playing;
+            clicked_ply_pse = !clicked_ply_pse;
             if (!playing) {
                 ray::PauseSound(neod);
                 ray::PauseSound(mush);
@@ -162,6 +178,7 @@ int main() {
             ray::StopSound(sweet);
 
             currentSong = back_adv;
+            clicked_ply_pse = true;
             playing = true;
         }
 
@@ -220,13 +237,17 @@ int main() {
         ray::BeginDrawing();
         ray::ClearBackground(ray::BLACK);
 
-        ray::DrawTextureEx(*currentTex, pos, 0.0f, scale, ray::WHITE);
-
-        ray::DrawTextureEx(button_ply, pos_ply, 0.0f, scale, ray::WHITE);
+        ray::DrawTextureEx(*currentTex, pos_dis, 0.0f, scale, ray::WHITE);
         ray::DrawTextureEx(button_cbk, pos_cbk, 0.0f, scale, ray::WHITE);
         ray::DrawTextureEx(button_adv, pos_adv, 0.0f, scale, ray::WHITE);
 
-        ray::DrawText(songText, 10, 280, 38, ray::Color{r, g, b, 255});
+        if (playing) {
+            ray::DrawTextureEx(button_pse, pos_ply, 0.0f, scale, ray::WHITE);
+        } else {
+            ray::DrawTextureEx(button_ply, pos_ply, 0.0f, scale, ray::WHITE);
+        }
+
+        ray::DrawText(songText, 11, 295, 35, ray::Color{r, g, b, 255});
         ray::EndDrawing();
     }
 
