@@ -25,7 +25,7 @@ int main() {
     ray::Texture button_cbk = ray::LoadTexture("image/buttons/come_back_button.png");
     ray::Texture button_pse = ray::LoadTexture("image/buttons/pause_button.png");
     ray::Texture button_ply = ray::LoadTexture("image/buttons/play_button.png");
-    ray::Texture button_adv = ray::LoadTexture("image/buttons/to_advenced.png");
+    ray::Texture button_adv = ray::LoadTexture("image/buttons/to_advenced_button.png");
 
     ray::InitAudioDevice();
     ray::Sound neod   = ray::LoadSound("sounds/neod.wav");
@@ -35,6 +35,13 @@ int main() {
     ray::Sound sweet  = ray::LoadSound("sounds/sweet.wav");
 
     while (!ray::WindowShouldClose()) {
+
+        ray::Vector2 pos_cbk = {124, 352};
+        ray::Vector2 pos_pse = {272, 350};
+        ray::Vector2 pos_ply = {272, 350};
+        ray::Vector2 pos_adv = {420, 352};
+        ray::Vector2 pos     = {0, 0};
+        
         if (ray::IsKeyPressed(ray::KEY_SPACE)) {
             playing = !playing;
             if (!playing) {
@@ -114,8 +121,12 @@ int main() {
             }
         }
 
-        ray::Vector2 pos = {0, 0};
         ray::DrawTextureEx(*currentTex, pos, 0.0f, 2.0f, ray::WHITE);
+
+        ray::DrawTextureEx(button_cbk, pos_cbk, 0.0f, 2.0f, ray::WHITE);
+        //ray::DrawTextureEx(button_pse, pos_pse, 0.0f, 2.0f, ray::WHITE);
+        ray::DrawTextureEx(button_ply, pos_ply, 0.0f, 2.0f, ray::WHITE);
+        ray::DrawTextureEx(button_adv, pos_adv, 0.0f, 2.0f, ray::WHITE);
 
         ray::DrawText(songText, 10, 280, 38, ray::Color{r, g, b, 255});
         ray::EndDrawing();
