@@ -4,21 +4,19 @@
  Tocador de músicas - compostas por: Francisco Passos / Frank Steps
  Desenvolvedor do projeto:           Francisco Passos / Frank Steps
  Desenvolvido em:                    02/08/2025
- Modificado em:                      22/09/2025
+ Modificado em:                      23/09/2025
 
  Este programa tem como finalidade usar as funcionalidades de audio e imagem do raylib, bem como
  sua capacidade em reconhecer as teclas que estão sendo pressionadas no teclado.
 
- Este programa consiste em tocar (ou pausar) as músicas. Funcionando como um tocador.
- Assim que uma tecla númerica (do 1 ao 5) é pressionada, a música toca e imagem muda.
- Ao clicar em "espaço", qualquer música que esteja tocando é pausada mudando assim para uma outra
- imagem.
- O botão de play/pause vão ser, em breve, colocados para funcionar. Por enquanto, ainda falta programar eles corretamente.
+Este programa é um player de música com a estética inspirada em jogos de RPG antigos. No projeto, o
+usuário usa as setas (direita e esquerda) ou os botões de avançar e de retroceder para escolher as músicas. 
+A tecla de espaço tem a mesma função do botão de play e pause da música.  
 
  Informações legais das músicas usadas neste projeto:
- O EP "CyanChemistry" e a single "Sweet Childhood" têm Direitos Autorais - CC (Creative Commons):
- Todas as músicas deste projeto foram compartilhadas no YouTube, bandcamp e Spotify, mas com algumas
- exceções:
+ O EP "Cyan Chemistry" e a single "Sweet Childhood" têm Direitos Autorais - CC (Creative Commons):
+ Todas as músicas deste projeto foram compartilhadas no YouTube, bandcamp, Spotify e entre outras plataformas, 
+ mas com algumas exceções:
 
  https://www.youtube.com/@Frank_Steps                              (todas as músicas)
  https://franksteps.bandcamp.com/                                  (todas as músicas)
@@ -26,6 +24,7 @@
  https://music.amazon.com.au/artists/B0D2Z8C41S/frank-steps        (exceto sweet Childhood e Bright Cooper)
  https://music.indiefy.net/artist/frank-steps                      (exceto sweet Childhood e Bright Cooper)
 
+ demais plataformas possuem as músicas do EP "Cyan Chemistry" exceto Bright Cooper.
 
  Observações e detalhes do projeto:
  Planejo acrescentar um arquivo para baixar este projeto em qualquer computador linux usando bash em sua
@@ -82,6 +81,13 @@ int main() {
 
     // window main loop
     while (!ray::WindowShouldClose()) {
+        // rainbow effect
+        float time = ray::GetTime();
+        unsigned char r = (unsigned char)(127 + 127 * sin(2 * M_PI * time * 0.3));
+        unsigned char g = (unsigned char)(127 + 127 * sin(2 * M_PI * time * 0.3 + 2));
+        unsigned char b = (unsigned char)(127 + 127 * sin(2 * M_PI * time * 0.3 + 4));
+
+        // mouse coordinates
         ray::Vector2 mousePoint = ray::GetMousePosition();
 
         // positions
@@ -89,6 +95,7 @@ int main() {
         ray::Vector2 pos_cbk = {124, 367};
         ray::Vector2 pos_ply = {272, 365};
         ray::Vector2 pos_adv = {420, 367};
+
 
         // click detections variables
         bool clicked_cbk = false;
@@ -118,6 +125,7 @@ int main() {
             (float)button_ply.height*scale
         };
 
+
         // button click detection
         if (ray::CheckCollisionPointRec(mousePoint, rect_adv) && ray::IsMouseButtonPressed(ray::MOUSE_BUTTON_LEFT)) {
             clicked_adv = true;
@@ -139,6 +147,7 @@ int main() {
                 ray::PauseSound(sweet);
             }          
         }
+
 
         // space = play/pause
         if (ray::IsKeyPressed(ray::KEY_SPACE)) {
@@ -169,6 +178,7 @@ int main() {
             clicked_cbk = false;
         }
 
+
         // change song
         if (back_adv != currentSong) {
             ray::StopSound(neod);
@@ -181,12 +191,6 @@ int main() {
             clicked_ply_pse = true;
             playing = true;
         }
-
-        // rainbow effect
-        float time = ray::GetTime();
-        unsigned char r = (unsigned char)(127 + 127 * sin(2 * M_PI * time * 0.3));
-        unsigned char g = (unsigned char)(127 + 127 * sin(2 * M_PI * time * 0.3 + 2));
-        unsigned char b = (unsigned char)(127 + 127 * sin(2 * M_PI * time * 0.3 + 4));
 
         // default screen (nothing song)
         ray::Texture *currentTex = &texNothing;
@@ -232,6 +236,7 @@ int main() {
                 break;   
             }
         }
+
 
         // draw
         ray::BeginDrawing();
