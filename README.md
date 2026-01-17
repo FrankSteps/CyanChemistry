@@ -1,10 +1,10 @@
-# 🎶 Tocador de Músicas — Frank Steps
+# Tocador de Músicas — Frank Steps
 
 ![byFrankSteps image](byFrankSteps.png)
 ![brightCooper image](brightCooper.png)
 
 
-## 📌 Informações do Projeto
+## Informações do Projeto
 - **Compositor:** Francisco Passos / *Frank Steps*  
 - **Desenvolvedor:** Francisco Passos / *Frank Steps*  
 - **Data de criação:** 02/08/2025  
@@ -12,21 +12,12 @@
 
 ---
 
-## 📝 Descrição
+## Descrição
 Este projeto é um **tocador de músicas** desenvolvido em **C++** utilizando a biblioteca [raylib](https://www.raylib.com/).  
 O objetivo principal é explorar funcionalidades de **áudio**, **imagem** e **interação com teclado** de forma simples e didática.  
 
----
 
-## 🎮 Funcionalidades
-- 🎵 Tocar ou pausar músicas.   
-- ⏸️ Ao pressionar a **barra de espaço**, qualquer música em execução é pausada e a imagem é alterada.
--   
-- 🔄 Sistema de **play/pause** por botões em desenvolvimento.  
-
----
-
-## 📀 Músicas
+## Músicas
 As músicas usadas neste projeto são composições originais de **Frank Steps**.  
 
 - EP **“Cyan Chemistry”** (4 faixas)  
