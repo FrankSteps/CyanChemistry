@@ -1,5 +1,9 @@
 # 🎶 Tocador de Músicas — Frank Steps
 
+![byFrankSteps image](byFrankSteps.png)
+![brightCooper image](brightCooper.png)
+
+
 ## 📌 Informações do Projeto
 - **Compositor:** Francisco Passos / *Frank Steps*  
 - **Desenvolvedor:** Francisco Passos / *Frank Steps*  
