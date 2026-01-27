@@ -5,7 +5,6 @@
 - **Compositor:** Francisco Passos / *Frank Steps* 
 - **Desenvolvedor:** Francisco Passos / *Frank Steps* 
 - **Data de criação:** 02/08/2025 
-- **Última modificação:** 22/09/2025 
 
 ---
 
@@ -19,6 +18,27 @@ As músicas usadas neste projeto são composições originais de **Frank Steps**
 
 - EP **“Cyan Chemistry”** (4 faixas) 
 - Single **“Sweet Childhood”** 
+
+
+# Dependências
+ - g++
+ - Raylib 
+ - Cmake 
+
+
+# Compile este projeto em seu computador:
+```bash
+# clone este repositório em seu computador 
+git clone https://github.com/FrankSteps/CyanChemistry
+cd CyanChemistry
+
+# Compile
+make
+
+# execute
+make run
+```
+
 
 ### Licença de uso das músicas
 As faixas estão sob **Creative Commons (CC)** e podem ser acessadas nas seguintes plataformas: 
